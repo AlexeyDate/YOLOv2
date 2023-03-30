@@ -1,0 +1,7 @@
+classes = 4
+train = data/train
+valid = data/test
+names = data/obj.names
+backup = backup/
+file_format = txt
+convert_to_yolo = False
