@@ -123,7 +123,7 @@ Additional parameters:
 * You should be careful with multi-scale training.
 
 ## References
-* [Original YOLOv1 paper](https://arxiv.org/pdf/1506.02640.pdf)
+* [Original YOLOv2 paper](https://arxiv.org/pdf/1506.02640.pdf)
 ___
 * [Darknet19 weights from ImageNet](https://pjreddie.com/media/files/darknet19_448.weights) (recommended for all trainings)
 ___
