@@ -103,6 +103,10 @@ Additional parameters:
 ![image2](https://user-images.githubusercontent.com/86290623/228927611-e747d106-19ba-4bcd-8d8a-5435b99bb89b.jpg)
 
 ## Comparison
+| Model   		      | Dataset 	   |Input size <br> <sub> pixel   | mAP <br> <sub>(@0.5)   |
+| :---:   		      | :---:   	   | :---:    	                  | :---: 		   |
+| YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	                 | 70     	  	  |
+| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	      	         | 61    	          |
 
 ## Dependencies
 **PyTorch** 
@@ -116,8 +120,7 @@ Additional parameters:
 
 **xmltodict**
 > Version: 0.13.0
-
-
+		
 ## Specificity
 * Training may not be established in the first epochs.
 * You should be careful with multi-scale training.
