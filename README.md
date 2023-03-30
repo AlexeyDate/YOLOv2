@@ -1,4 +1,4 @@
-# Implementation YOLOv2 using Pytorch 
+# Implementation YOLOv2 using PyTorch 
 ![image1](https://user-images.githubusercontent.com/86290623/228918454-ae2f39dd-4ccc-4f55-93a1-fcea701f4132.jpg)
 
 
