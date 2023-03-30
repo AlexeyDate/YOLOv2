@@ -66,6 +66,21 @@ example:
 		</bndbox>
     
 ## Training
+* Before training, you should extract clusters of anchor boxes based on k-means clustering:
+> 
+    python3 clusterAnalysis.py
+**Note**: Set the results obtained below to the `anchors` variable in `train.py` and `detect.py`
+>	
+    average IOU: 0.984
+    anchor boxes:
+    [[0.29782801 0.56151986]
+    [0.50883439 0.68684481]
+    [0.38934379 0.61309636]
+    [0.7571919  0.75148152]
+    [0.19968393 0.27542369]]
+
+
+* Moving on to training
 > 
     python3 train.py --epochs 100 --learning_rate 1e-5 
     
@@ -85,8 +100,9 @@ All training parameters:
 
 `--multiscale_off`          (states: disable multi-scale training)
 
-After training, mAP will be calculated on the train dataloader and the test dataloader.
-You can change the thresholds in `train.py`.
+* After training, mAP will be calculated on the train dataloader and the test dataloader. 
+
+**Note**: You can change the thresholds in `train.py`.
 
 ## Inference
 On video:
@@ -100,13 +116,15 @@ Additional parameters:
 
 `--show`          (states: show frames during inference)
 
+**Note**: You can change the thresholds in `detect.py`.
+
 ![image2](https://user-images.githubusercontent.com/86290623/228927611-e747d106-19ba-4bcd-8d8a-5435b99bb89b.jpg)
 
 ## Comparison
-| Model   		      | Dataset 	   |Input size <br> <sub> (pixel)   | mAP <br> <sub>(@0.5)   |
-| :---:   		      | :---:   	   | :---:    	                    | :---: 		     |
-| YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	                   | 70     	  	    |
-| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	      	           | 61    	            |
+| Model   		      | Dataset 	   | Input size <br> <sub> (pixel)   | Params <br> <sub> (M)   | mAP <br> <sub>(@0.5)   |
+| :---:   		      | :---:   	   | :---:    	                     | :---: 		       | :---: 		        | 
+| YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	                    | 268.5		      | 61     	  	       |
+| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	      	            | 50.57		      | 70    	               |
 
 ## Dependencies
 **PyTorch** 
