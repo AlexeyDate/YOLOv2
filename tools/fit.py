@@ -73,8 +73,7 @@ def fit(model, optimizer, scheduler, criterion, epochs, train_dataloader, val_da
                 train_dataset.s = random.randint(10, 19)
                 if train_dataset and verbose:
                     print('\nResolution change to', '[', train_dataset.s * 32, 'x', train_dataset.s * 32, ']')
-            item += 1
-
+                    
         scheduler.step()
 
         train_loss = [item / len(train_dataloader) for item in train_loss]
