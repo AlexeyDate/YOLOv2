@@ -108,8 +108,6 @@ class Dataset(Dataset):
         target = torch.zeros((self.s, self.s, self.num_anchors, self.num_classes + 5), dtype=torch.float32)
 
         for i, box in enumerate(transformed_bboxes):
-            class_tensor = torch.zeros(self.num_classes, dtype=torch.float32)
-            class_tensor[transformed_class_labels[i]] = 1
             x_cell = int(self.s * box[0])
             y_cell = int(self.s * box[1])
 
