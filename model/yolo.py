@@ -79,7 +79,7 @@ class YOLOv2(nn.Module):
             nn.BatchNorm2d(1024),
             nn.LeakyReLU(negative_slope=0.1),
             nn.Conv2d(in_channels=1024, out_channels=self.num_anchors * (5 + num_classes), kernel_size=1, stride=1,
-                      padding=0, bias=False)
+                      padding=0, bias=True)
         )
 
     def forward(self, x):
