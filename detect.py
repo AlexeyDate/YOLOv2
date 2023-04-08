@@ -26,7 +26,7 @@ parser.add_argument('--video', action='store_true', default=False, help='Enable 
 parser.add_argument('--show', action='store_true', default=False, help='Show image or video during object detection')
 args = parser.parse_args()
 
-threshold = 0.3
+threshold = 0.2
 anchors = [[0.775, 0.774152],
            [0.598437, 0.689189],
            [0.234375, 0.320291],
@@ -49,6 +49,7 @@ try:
     model.load_state_dict(torch.load(args.weights))
 except Exception:
     print('WeightLoadingError: please check your PyTorch weight file')
+    exit(-1)
 
 cap = cv2.VideoCapture(args.data_test)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -84,8 +85,12 @@ while cap.isOpened():
         num_classes = int((predictions.size(-1) - 5 * num_anchors) / 5)
         predictions = predictions.view(size, s, s, num_anchors, 5 + num_classes)
 
+        # prediction must be converted to [sigma(conf), sigma(tx), sigma(ty), tw, th, c1, c2, ..., cn]
+        predictions[..., 0] = torch.sigmoid(predictions[..., 0])
+        predictions[..., 1:3] = torch.sigmoid(predictions[..., 1:3])
+
         # convert predictions and targets to standard YOLO format
-        predicted_bbox = convert_to_yolo(predictions, anchors, s, target=False)
+        predicted_bbox = convert_to_yolo(predictions, anchors, s, with_softmax=True)
 
         mask = predicted_bbox[..., 0] >= threshold
         predicted_bbox = predicted_bbox[mask, :]

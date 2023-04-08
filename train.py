@@ -28,13 +28,14 @@ parser.add_argument('--epochs', type=int, default=100, help='Total epochs')
 parser.add_argument('--learning_rate', type=float, default=0.00005, help='Learning rate')
 parser.add_argument('--weight_decay', type=float, default=0.0002, help='Weight decay')
 parser.add_argument('--multiscale_off', action='store_true', default=False, help='Disable multi-scale training')
+parser.add_argument('--verbose', action='store_true', default=False, help='Show all losses and resolution changes')
 args = parser.parse_args()
 
-anchors = [[0.43091713, 0.84820359],
-           [0.69305217, 0.72017744],
-           [0.20370923, 0.2857396],
-           [0.4212115, 0.56181118],
-           [0.87742612, 0.84512792]]
+anchors = [[0.775, 0.774152],
+           [0.598437, 0.689189],
+           [0.234375, 0.320291],
+           [0.45625, 0.9],
+           [0.449219, 0.660934]]
 
 train_dataset = Dataset(
     data_dir=data_train,
@@ -61,7 +62,6 @@ assert isinstance(train_dataset[0], dict)
 assert len(train_dataset[0]) == 2
 assert isinstance(train_dataset[0]['image'], torch.Tensor)
 assert isinstance(train_dataset[0]['target'], torch.Tensor)
-print('all tests is correct')
 
 train_dataloader = DataLoader(
     dataset=train_dataset,
@@ -88,7 +88,6 @@ loss = YOLOLoss(anchors=anchors).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate, weight_decay=args.weight_decay)
 scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer=optimizer, gamma=0.99)
 
-
 fit(model=model,
     optimizer=optimizer,
     scheduler=scheduler,
@@ -98,14 +97,14 @@ fit(model=model,
     val_dataloader=val_dataloader,
     train_dataset=train_dataset if not args.multiscale_off else None,
     backup=backup,
-    verbose=True)
-
-pred_boxes, true_boxes = get_bound_boxes(train_dataloader, model, anchors, iou_threshold=0.5, threshold=0.5)
-mAP = mean_average_precision(pred_boxes, true_boxes, classes=classes, iou_threshold=0.5)
-print(f'train mAP: {mAP}\n')
-
-pred_boxes, true_boxes = get_bound_boxes(val_dataloader, model, anchors, iou_threshold=0.5, threshold=0.44)
-mAP = mean_average_precision(pred_boxes, true_boxes, classes=classes, iou_threshold=0.5)
-print(f'val mAP: {mAP}\n')
+    verbose=args.verbose)
 
 torch.save(model.state_dict(), backup + 'yolov2_' + str(args.epochs) + '.pt')
+
+pred_boxes, true_boxes = get_bound_boxes(train_dataloader, model, anchors, iou_threshold=0.5, threshold=0.3)
+mAP = mean_average_precision(pred_boxes, true_boxes, classes=classes, iou_threshold=0.5)
+print(f'Train mAP: {mAP}')
+
+pred_boxes, true_boxes = get_bound_boxes(val_dataloader, model, anchors, iou_threshold=0.5, threshold=0.3)
+mAP = mean_average_precision(pred_boxes, true_boxes, classes=classes, iou_threshold=0.5)
+print(f'Validation mAP: {mAP}')
