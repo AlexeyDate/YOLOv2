@@ -120,7 +120,7 @@ class Dataset(Dataset):
             th = torch.log(box[3] / self.anchors[best_index, 1])
 
             target[y_cell, x_cell, best_index, 1:5] = torch.tensor([tx, ty, tw, th])
-            target[y_cell, x_cell, best_index, 5 + transformed_class_labels[i]] = 1
+            target[y_cell, x_cell, best_index, 5] = transformed_class_labels[i]
 
             for index, iou in enumerate(calculate_ious):
                 if index == best_index:
