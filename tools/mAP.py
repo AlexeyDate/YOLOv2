@@ -24,11 +24,11 @@ def mean_average_precision(pred_boxes, true_boxes, classes, iou_threshold=0.5) -
         recalls = []
 
         for i in range(len(true_boxes)):
-            FN += len([box for box in true_boxes[i] if torch.argmax(box[5:]) == current_class])
+            FN += len([box for box in true_boxes[i] if box[5] == current_class])
 
         for i in range(len(pred_boxes)):
             pred_boxes_class = [box for box in pred_boxes[i] if torch.argmax(box[5:]) == current_class]
-            true_boxes_class = [box for box in true_boxes[i] if torch.argmax(box[5:]) == current_class]
+            true_boxes_class = [box for box in true_boxes[i] if box[5] == current_class]
             for k in range(len(pred_boxes_class)):
                 max_iou = 0
                 max_index = 0

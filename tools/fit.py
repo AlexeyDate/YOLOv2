@@ -73,7 +73,7 @@ def fit(model, optimizer, scheduler, criterion, epochs, train_dataloader, val_da
                 train_dataset.s = random.randint(10, 19)
                 if train_dataset and verbose:
                     print('\nResolution change to', '[', train_dataset.s * 32, 'x', train_dataset.s * 32, ']')
-                    
+
         scheduler.step()
 
         train_loss = [item / len(train_dataloader) for item in train_loss]
@@ -104,8 +104,8 @@ def fit(model, optimizer, scheduler, criterion, epochs, train_dataloader, val_da
             print('classes loss:', val_loss[5])
             print('total loss:', val_loss[0])
         else:
-            print(f"train loss: {train_loss}")
-            print(f"val loss: {val_loss}")
+            print(f"train loss: {train_loss[0]}")
+            print(f"val loss: {val_loss[0]}")
 
         line_train, = plt.plot(list(range(0, epoch + 1)), train_loss_log, color='blue')
         line_val, = plt.plot(list(range(0, epoch + 1)), val_loss_log, color='orange')       

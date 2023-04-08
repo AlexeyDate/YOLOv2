@@ -98,16 +98,14 @@ def non_max_supression(bboxes, iou_threshold):
     return non_max_bboxes
 
 
-def convert_to_yolo(bbox, anchors, s, target=False) -> torch.Tensor:
+def convert_to_yolo(bbox, anchors, s, with_softmax=False) -> torch.Tensor:
     """
     convert predicted coordinates to standard YOLO format
 
     param: bbox - bounding boxes
     param: anchors - anchor boxes
     param: s - current grid size
-    param: target - to calculate confidience using sigmoid function and
-    classes using softmax function for predicted values (default=False).
-    This is only for predictions.
+    param: with_softmax - flag for softmax calculation during evaluation for predictions (default = True)
 
     return: calculated all bounding boxes in standard YOLO format
 
@@ -121,14 +119,13 @@ def convert_to_yolo(bbox, anchors, s, target=False) -> torch.Tensor:
     grid_y, grid_x = torch.meshgrid(torch.arange(s), torch.arange(s), indexing='ij')
     grid_y = grid_y.contiguous().view(1, s, s, 1).to(device)
     grid_x = grid_x.contiguous().view(1, s, s, 1).to(device)
- 
-    bbox[..., 1] = (torch.sigmoid(bbox[..., 1]) + grid_x) / s
-    bbox[..., 2] = (torch.sigmoid(bbox[..., 2]) + grid_y) / s
+
+    bbox[..., 1] = (bbox[..., 1] + grid_x) / s
+    bbox[..., 2] = (bbox[..., 2] + grid_y) / s
     bbox[..., 3] = anchors[:, 0] * torch.exp(bbox[..., 3])
     bbox[..., 4] = anchors[:, 1] * torch.exp(bbox[..., 4])
 
-    if not target:
-        bbox[..., 0] = torch.sigmoid(bbox[..., 0])
+    if with_softmax:
         bbox[..., 5:] = torch.softmax(bbox[..., 5:], dim=-1)
 
     return bbox
@@ -139,6 +136,7 @@ def get_bound_boxes(loader, model, anchors, iou_threshold=0.5, threshold=0.4):
     Getting predicted and target bounding boxes with Non-Maximum Supression.
 
     param: loader - dataloader
+    param: anchors - anchor boxes
     param: model - model
     param: iou_threshold - Intersection Over Union threshold (default = 0.5)
     param: threshold - confidience threshold (default = 0.4)
@@ -172,9 +170,13 @@ def get_bound_boxes(loader, model, anchors, iou_threshold=0.5, threshold=0.4):
     num_classes = int((predictions.size(-1) - 5 * num_anchors) / 5)
     predictions = predictions.view(size, s, s, num_anchors, 5 + num_classes)
 
+    # prediction must be converted to [sigma(conf), sigma(tx), sigma(ty), tw, th, c1, c2, ..., cn]
+    predictions[..., 0] = torch.sigmoid(predictions[..., 0])
+    predictions[..., 1:3] = torch.sigmoid(predictions[..., 1:3])
+
     # convert predictions and targets to standard YOLO format
-    predicted_bbox = convert_to_yolo(predictions, anchors, s, target=False)
-    target_bbox = convert_to_yolo(targets, anchors, s, target=True)
+    predicted_bbox = convert_to_yolo(predictions, anchors, s, with_softmax=True)
+    target_bbox = convert_to_yolo(targets, anchors, s)
 
     all_pred_boxes = []
     all_true_boxes = []
