@@ -1,5 +1,5 @@
 # Implementation YOLOv2 using PyTorch 
-![image1](https://user-images.githubusercontent.com/86290623/228918454-ae2f39dd-4ccc-4f55-93a1-fcea701f4132.jpg)
+![image1](https://user-images.githubusercontent.com/86290623/230707280-357bb465-a708-47f5-b24f-916c9789e2f5.jpg)
 
 
 ## Dataset
@@ -100,6 +100,8 @@ All training parameters:
 
 `--multiscale_off`          (states: disable multi-scale training)
 
+`--verbose`		    (states: show all losses and resolution changes)
+
 * After training, mAP will be calculated on the train dataloader and the test dataloader. 
 
 **Note**: You can change the thresholds in `train.py`.
@@ -118,13 +120,13 @@ Additional parameters:
 
 **Note**: You can change the thresholds in `detect.py`.
 
-![image2](https://user-images.githubusercontent.com/86290623/228927611-e747d106-19ba-4bcd-8d8a-5435b99bb89b.jpg)
+![image2](https://user-images.githubusercontent.com/86290623/230707290-79c7ec29-10a7-4339-9c6f-090137c0a0f4.jpg)
 
 ## Comparison
 | Model   		      | Dataset 	   | Input size <br> <sub> (pixel)   | Params <br> <sub> (M)   | mAP <br> <sub>(@0.5)   |
 | :---:   		      | :---:   	   | :---:    	                     | :---: 		       | :---: 		        | 
 | YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	                    | 268.5		      | 61     	  	       |
-| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	      	            | 50.57		      | 70    	               |
+| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	      	            | 50.57		      | 72    	               |
 
 ## Dependencies
 **PyTorch** 
@@ -149,5 +151,5 @@ ___
 * [Darknet19 weights from ImageNet](https://pjreddie.com/media/files/darknet19_448.weights) (recommended for all trainings)
 ___
 * [African Wildlife dataset](https://www.kaggle.com/datasets/biancaferreira/african-wildlife?resource=download)
-* [African Wildlife PyTorch weights](https://drive.google.com/file/d/1-0xX8dxh4oc6FhGH3jighnMQDLNMrR67/view?usp=share_link)
-* [African Wildlife optimizer state](https://drive.google.com/file/d/1-3mbEJSViHkMYB9Ru4x05h0kx9Tou7cn/view?usp=share_link)
+* [African Wildlife PyTorch weights](https://drive.google.com/file/d/1-3yU88lE0jnV6yOEnt-J9pZI2PP3yvH2/view?usp=share_link)
+* [African Wildlife optimizer state](https://drive.google.com/file/d/1-5hQ_aH18BgmU-X-GG3BEyCr3aaTDxqg/view?usp=sharing)
