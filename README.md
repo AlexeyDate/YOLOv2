@@ -123,10 +123,10 @@ Additional parameters:
 ![image2](https://user-images.githubusercontent.com/86290623/230707290-79c7ec29-10a7-4339-9c6f-090137c0a0f4.jpg)
 
 ## Comparison
-| Model   		      | Dataset 	   | Input size <br> <sub> (pixel)   | Params <br> <sub> (M)   | mAP <br> <sub>(@0.5)   |
-| :---:   		      | :---:   	   | :---:    	                     | :---: 		       | :---: 		        | 
-| YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	                    | 268.5		      | 61     	  	       |
-| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	      	            | 50.57		      | 72    	               |
+| Model   		      | Dataset 	   | Input size <br> <sub> (pixel)    | mAP <br> <sub>(@0.5)   |
+| :---:   		      | :---:   	   | :---:    	                      | :---: 		       | 
+| YOLOv1 <br> <sub> (Ours⭐)  | African Wildlife   | 448       	                     | 61     	  	      |
+| YOLOv2 <br> <sub> (Ours⭐)  | African Wildlife   | 416       	      	             | 72    	              |
 
 ## Dependencies
 **PyTorch** 
