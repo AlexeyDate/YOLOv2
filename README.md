@@ -96,7 +96,7 @@ All training parameters:
 
 `--yolo_weights`            (states: path to yolo PyTorch weights)
 
-`--darknet_weights`         (states: path to extraction binary weights, it's base CNN module of YOLO)
+`--darknet_weights`         (states: path to Darknet19 binary weights, it's base CNN module of YOLOv2)
 
 `--multiscale_off`          (states: disable multi-scale training)
 
