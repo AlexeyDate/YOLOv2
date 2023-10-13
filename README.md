@@ -109,10 +109,10 @@ All training parameters:
 ## Inference
 On video:
 > 
-    python3 detect.py --video --data_test content/video.mp4 --output content/detect.mp4 --weights backup/yolov1.pt
+    python3 detect.py --video --data_test content/video.mp4 --output content/detect.mp4 --weights backup/yolov2.pt
 On image:
 > 
-    python3 detect.py --data_test content/image.jpg --output content/detect.jpg --weights backup/yolov1.pt
+    python3 detect.py --data_test content/image.jpg --output content/detect.jpg --weights backup/yolov2.pt
 
 Additional parameters:
 
